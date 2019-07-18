@@ -46,10 +46,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tvTables = new System.Windows.Forms.TreeView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dgvColumns = new System.Windows.Forms.DataGridView();
+            this.表名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.服务名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.类型 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.查询条件 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvColumns)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -225,32 +231,82 @@
             this.tvTables.Name = "tvTables";
             this.tvTables.Size = new System.Drawing.Size(121, 449);
             this.tvTables.TabIndex = 3;
+            this.tvTables.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvTables_AfterSelect);
             // 
-            // dataGridView1
+            // groupBox3
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(278, 210);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(723, 150);
-            this.dataGridView1.TabIndex = 3;
+            this.groupBox3.Controls.Add(this.dgvColumns);
+            this.groupBox3.Location = new System.Drawing.Point(179, 157);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(854, 348);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "服务层";
+            // 
+            // dgvColumns
+            // 
+            this.dgvColumns.AllowUserToAddRows = false;
+            this.dgvColumns.AllowUserToDeleteRows = false;
+            this.dgvColumns.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvColumns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvColumns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.表名称,
+            this.服务名,
+            this.类型,
+            this.查询条件});
+            this.dgvColumns.Location = new System.Drawing.Point(6, 20);
+            this.dgvColumns.Name = "dgvColumns";
+            this.dgvColumns.RowTemplate.Height = 23;
+            this.dgvColumns.Size = new System.Drawing.Size(844, 322);
+            this.dgvColumns.TabIndex = 0;
+            // 
+            // 表名称
+            // 
+            this.表名称.DataPropertyName = "表名称";
+            this.表名称.HeaderText = "表名称";
+            this.表名称.Name = "表名称";
+            this.表名称.ReadOnly = true;
+            // 
+            // 服务名
+            // 
+            this.服务名.DataPropertyName = "服务名";
+            this.服务名.HeaderText = "服务名";
+            this.服务名.Name = "服务名";
+            this.服务名.ReadOnly = true;
+            // 
+            // 类型
+            // 
+            this.类型.DataPropertyName = "类型";
+            this.类型.HeaderText = "类型";
+            this.类型.Items.AddRange(new object[] {
+            "HttpGet",
+            "HttpPost"});
+            this.类型.Name = "类型";
+            // 
+            // 查询条件
+            // 
+            this.查询条件.DataPropertyName = "查询条件";
+            this.查询条件.HeaderText = "查询条件";
+            this.查询条件.Name = "查询条件";
             // 
             // createCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 517);
-            this.Controls.Add(this.dataGridView1);
+            this.ClientSize = new System.Drawing.Size(1045, 517);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.Name = "createCode";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "代码生成器";
             this.Load += new System.EventHandler(this.createCode_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvColumns)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,6 +332,11 @@
         private System.Windows.Forms.TextBox fileName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TreeView tvTables;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.DataGridView dgvColumns;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 表名称;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 服务名;
+        private System.Windows.Forms.DataGridViewComboBoxColumn 类型;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 查询条件;
     }
 }
