@@ -19,6 +19,7 @@ namespace CreateCord
             InitializeComponent();
         }
         string ConnectionString = string.Empty;
+        public string TableName = string.Empty;
         public createCode(string ConnectionStrings)
         {
             InitializeComponent();
@@ -33,23 +34,25 @@ namespace CreateCord
         {
             IcreateType = new PGCreateCode(ConnectionString);
             DataTable dt_Tables = IcreateType.GetTables();
-            foreach (DataRow row in dt_Tables.Rows)
-            {
-                TreeNode tn = new TreeNode();//创建树节点
-                tn.Text = row["name"].ToString();
-                this.tvTables.Nodes.Add(tn);//添加到树上面
-            }
+     
+            dgridTable.DataSource = dt_Tables;
+            dgridTable.ClearSelection();
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            if (null==dgvColumns.DataSource)
+            {
+                MessageBox.Show("请选择需要生成的表","提示");
+                return;
+            }
             subPathName = "" + t_path.Text + "" + fileName.Text + ""; //创建文件夹
             if (false == System.IO.Directory.Exists(subPathName))
             {
                 //创建pic文件夹
                 System.IO.Directory.CreateDirectory(subPathName);
             }
-            DataRow[] list = IcreateType.GetColumns(this.tvTables.SelectedNode.Text).Select("type='jsonb' or type='json'");
-            DataTable lists = IcreateType.GetData(this.tvTables.SelectedNode.Text);
+            DataRow[] list = IcreateType.GetColumns(TableName).Select("type='jsonb' or type='json'");
+            DataTable lists = IcreateType.GetData(TableName);
             string name = list[0][0].ToString();
             string strvalue = string.Empty;
             if (lists.Rows.Count > 0)
@@ -70,13 +73,13 @@ namespace CreateCord
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Dictionary<string, Object> json = (Dictionary<string, Object>)serializer.DeserializeObject(strJson);
             List<string> keys = json.Keys.ToList();
-            FileOperate.FWrite("using System;\r\nnamespace Model\r\n{\r\npublic class " + this.tvTables.SelectedNode.Text + "\r\n{\r\n", "" + subPath + "\\" + this.tvTables.SelectedNode.Text + ".cs");
+            FileOperate.FWrite("using System;\r\nnamespace Model\r\n{\r\npublic class " + TableName + "\r\n{\r\n", "" + subPath + "\\" + TableName + ".cs");
             foreach (var s in keys)
             {
                 findNode(json[s], s, "test", true);
             }
 
-            DataRow[] Rowlist = IcreateType.GetColumns(this.tvTables.SelectedNode.Text).Select("type <> 'jsonb' and type <>'json'");
+            DataRow[] Rowlist = IcreateType.GetColumns(TableName).Select("type <> 'jsonb' and type <>'json'");
             for (int i = 0; i < Rowlist.Length; i++)
             {
                 string classType = FileOperate.SqlTypeTope(Rowlist[i][1].ToString());
@@ -85,11 +88,11 @@ namespace CreateCord
                     classType = "string";
                 }
                 string className = Rowlist[i][0].ToString();
-                FileOperate.FWrite("public  " + classType + "  " + className + "    {get;set;}\r\n", "" + subPath + "\\" + this.tvTables.SelectedNode.Text + ".cs");
+                FileOperate.FWrite("public  " + classType + "  " + className + "    {get;set;}\r\n", "" + subPath + "\\" + TableName + ".cs");
 
             }
-            FileOperate.FWrite("}\r\n}\r\n", "" + subPath + "\\" + this.tvTables.SelectedNode.Text + ".cs");
-            CreateManger(this.tvTables.SelectedNode.Text);
+            FileOperate.FWrite("}\r\n}\r\n", "" + subPath + "\\" + TableName + ".cs");
+            CreateManger(TableName);
             CreateComponent((DataTable)dgvColumns.DataSource);
             CreateControllers((DataTable)dgvColumns.DataSource);
         }
@@ -99,7 +102,7 @@ namespace CreateCord
             {
                 if (IsF)
                 {
-                    FileOperate.FWrite("public string " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + this.tvTables.SelectedNode.Text + ".cs");
+                    FileOperate.FWrite("public string " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + TableName + ".cs");
                 }
                 else
                 {
@@ -112,7 +115,7 @@ namespace CreateCord
             {
                 if (IsF)
                 {
-                    FileOperate.FWrite("public int " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + this.tvTables.SelectedNode.Text + ".cs");
+                    FileOperate.FWrite("public int " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + TableName + ".cs");
                 }
                 else
                 {
@@ -125,7 +128,7 @@ namespace CreateCord
             {
                 if (IsF)
                 {
-                    FileOperate.FWrite("public string " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + this.tvTables.SelectedNode.Text + ".cs");
+                    FileOperate.FWrite("public string " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + TableName + ".cs");
                 }
                 else
                 {
@@ -140,7 +143,7 @@ namespace CreateCord
                 List<string> keys = chi.Keys.ToList();
                 if (IsF)
                 {
-                    FileOperate.FWrite("public " + fileName + "Content  " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + this.tvTables.SelectedNode.Text + ".cs");
+                    FileOperate.FWrite("public " + fileName + "Content  " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + TableName + ".cs");
                 }
                 else
                 {
@@ -166,7 +169,7 @@ namespace CreateCord
                 List<string> keys = chi.Keys.ToList();
                 if (IsF)
                 {
-                    FileOperate.FWrite("public List<" + fileName + "Content>  " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + this.tvTables.SelectedNode.Text + ".cs");
+                    FileOperate.FWrite("public List<" + fileName + "Content>  " + fileName + "  {get;set;}\r\n", "" + subPath + "\\" + TableName + ".cs");
                 }
                 else
                 {
@@ -283,7 +286,7 @@ namespace CreateCord
             code_list.Add("using Model;");
             code_list.Add(" namespace Component");
             code_list.Add("{");
-            code_list.Add(" public class " + this.tvTables.SelectedNode.Text + "Component :ComponentBase<" + this.tvTables.SelectedNode.Text + "," + this.tvTables.SelectedNode.Text + "Manager>");
+            code_list.Add(" public class " + TableName + "Component :ComponentBase<" + TableName + "," + TableName + "Manager>");
             code_list.Add("{");
 
             foreach (DataRow dr in datasource.Rows)
@@ -325,7 +328,7 @@ namespace CreateCord
             }
             code_list.Add("}");
             code_list.Add("}");
-            FileOperate.FileWrite(code_list, "" + CpPath + "/" + this.tvTables.SelectedNode.Text + "Component.cs");
+            FileOperate.FileWrite(code_list, "" + CpPath + "/" + TableName + "Component.cs");
         }
 
         #endregion
@@ -433,11 +436,9 @@ namespace CreateCord
         }
         #endregion
 
-        private void tvTables_AfterSelect(object sender, TreeViewEventArgs e)
+        private void dgridTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            string dataName = this.tvTables.SelectedNode.Text;
-
-
+            string dataName = dgridTable.Rows[e.RowIndex].Cells["name"].Value.ToString();
 
             string name = string.Empty;
             DataTable dt = new DataTable();
@@ -449,16 +450,20 @@ namespace CreateCord
             for (int i = 0; i < strArr.Length; i++)
             {
                 DataRow dr = dt.NewRow();
-                dr[0] = this.tvTables.SelectedNode.Text;
+                dr[0] = dataName;
                 dr[1] = strArr[i];
 
                 dt.Rows.Add(dr);
             }
             this.dgvColumns.DataSource = dt;
             ((DataGridViewComboBoxColumn)dgvColumns.Columns["类型"]).DefaultCellStyle.NullValue = "HttpGet";
+            TableName = dataName;
 
+        }
 
-
+        public string GetTableName()
+        {
+            return dgridTable.SelectedRows[0].Cells["name"].Value.ToString();
         }
     }
 }

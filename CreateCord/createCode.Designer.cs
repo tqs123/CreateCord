@@ -45,17 +45,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tvTables = new System.Windows.Forms.TreeView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dgvColumns = new System.Windows.Forms.DataGridView();
             this.表名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.服务名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.类型 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.查询条件 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgridTable = new System.Windows.Forms.DataGridView();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColumns)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgridTable)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -217,21 +219,13 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.tvTables);
+            this.groupBox2.Controls.Add(this.dgridTable);
             this.groupBox2.Location = new System.Drawing.Point(12, 30);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(139, 475);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "选择表";
-            // 
-            // tvTables
-            // 
-            this.tvTables.Location = new System.Drawing.Point(12, 20);
-            this.tvTables.Name = "tvTables";
-            this.tvTables.Size = new System.Drawing.Size(121, 449);
-            this.tvTables.TabIndex = 3;
-            this.tvTables.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvTables_AfterSelect);
             // 
             // groupBox3
             // 
@@ -289,6 +283,35 @@
             this.查询条件.HeaderText = "查询条件";
             this.查询条件.Name = "查询条件";
             // 
+            // dgridTable
+            // 
+            this.dgridTable.AllowUserToAddRows = false;
+            this.dgridTable.AllowUserToDeleteRows = false;
+            this.dgridTable.AllowUserToResizeColumns = false;
+            this.dgridTable.AllowUserToResizeRows = false;
+            this.dgridTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgridTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgridTable.ColumnHeadersVisible = false;
+            this.dgridTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.name});
+            this.dgridTable.Location = new System.Drawing.Point(5, 20);
+            this.dgridTable.MultiSelect = false;
+            this.dgridTable.Name = "dgridTable";
+            this.dgridTable.ReadOnly = true;
+            this.dgridTable.RowHeadersVisible = false;
+            this.dgridTable.RowTemplate.Height = 23;
+            this.dgridTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgridTable.Size = new System.Drawing.Size(128, 449);
+            this.dgridTable.TabIndex = 1;
+            this.dgridTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgridTable_CellClick);
+            // 
+            // name
+            // 
+            this.name.DataPropertyName = "name";
+            this.name.HeaderText = "";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            // 
             // createCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -307,6 +330,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvColumns)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgridTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -331,12 +355,13 @@
         private System.Windows.Forms.Label lABEL;
         private System.Windows.Forms.TextBox fileName;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TreeView tvTables;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.DataGridView dgvColumns;
         private System.Windows.Forms.DataGridViewTextBoxColumn 表名称;
         private System.Windows.Forms.DataGridViewTextBoxColumn 服务名;
         private System.Windows.Forms.DataGridViewComboBoxColumn 类型;
         private System.Windows.Forms.DataGridViewTextBoxColumn 查询条件;
+        private System.Windows.Forms.DataGridView dgridTable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
     }
 }
