@@ -313,5 +313,31 @@ namespace CreateCord
             return dir;
         }
         #endregion
+
+        private void tvTables_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            string dataName = this.tvTables.SelectedNode.Text;
+
+            
+        
+            string name = string.Empty;
+            DataTable dt = new DataTable();
+            dt.Columns.Add("表名称");
+            dt.Columns.Add("服务名");
+            dt.Columns.Add("类型");
+            dt.Columns.Add("查询条件");
+            string[] strArr = { "insert", "update","delete","getall"};
+            for (int i = 0; i < strArr.Length; i++)
+            {
+                DataRow dr = dt.NewRow();
+                dr[0] = this.tvTables.SelectedNode.Text;
+                dr[1] = strArr[i];
+              
+                dt.Rows.Add(dr);
+            }
+            this.dgvColumns.DataSource = dt;
+            ((DataGridViewComboBoxColumn)dgvColumns.Columns["类型"]).DefaultCellStyle.NullValue = "HttpGet";
+
+        }
     }
 }
