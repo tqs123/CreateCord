@@ -32,7 +32,7 @@ namespace CreateCord
         string CpPath = string.Empty;//逻辑层路径
         private void createCode_Load(object sender, EventArgs e)
         {
-            IcreateType = new PGCreateCode(ConnectionString);
+            IcreateType = new SQLCreateCode("server=(local);uid=sa;pwd=123456;database=FHIR;");
             DataTable dt_Tables = IcreateType.GetTables();
      
             dgridTable.DataSource = dt_Tables;
