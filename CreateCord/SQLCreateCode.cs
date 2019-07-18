@@ -35,7 +35,7 @@ namespace CreateCord
         /// <returns></returns>
         public DataTable GetTables()
         {
-            string sql = string.Format("select * from sysobjects   where  type='U' order by name  asc");
+            string sql = string.Format("select name from sysobjects   where  type='U' order by name  asc");
             return iDB.getDataTable(sql);
         }
         /// <summary>
