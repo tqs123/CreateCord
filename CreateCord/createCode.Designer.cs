@@ -53,6 +53,7 @@
             this.服务名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.类型 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.查询条件 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAddRow = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgridTable)).BeginInit();
@@ -312,11 +313,22 @@
             this.查询条件.HeaderText = "查询条件";
             this.查询条件.Name = "查询条件";
             // 
+            // btnAddRow
+            // 
+            this.btnAddRow.Location = new System.Drawing.Point(847, 140);
+            this.btnAddRow.Name = "btnAddRow";
+            this.btnAddRow.Size = new System.Drawing.Size(75, 23);
+            this.btnAddRow.TabIndex = 1;
+            this.btnAddRow.Text = "新增列";
+            this.btnAddRow.UseVisualStyleBackColor = true;
+            this.btnAddRow.Click += new System.EventHandler(this.BtnAddRow_Click);
+            // 
             // createCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1045, 517);
+            this.Controls.Add(this.btnAddRow);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
@@ -363,5 +375,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 查询条件;
         private System.Windows.Forms.DataGridView dgridTable;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.Button btnAddRow;
     }
 }

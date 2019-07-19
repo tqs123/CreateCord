@@ -387,18 +387,23 @@ namespace CreateCord
             code_list.Add("public class " + className + "Controller : Controller");
             code_list.Add("{");
 
-            code_list.Add("public ActionResult Index()");
+            code_list.Add("public string Get()");
             code_list.Add("{");
-       
-            code_list.Add("return View();");
+            code_list.Add("string str = BaseFunction.GetControllerInfo<"+ className + "Controller>();");
+            code_list.Add("return str;");
             code_list.Add("}");
             int i = 0;
             foreach (DataRow dr in dataJson.Rows)
             {
                 string strServerName = dr["服务名"].ToString();
+                if (null == strServerName || strServerName == "" || strServerName.Length == 0) continue;
                 string strType = this.dgvColumns.Rows[i].Cells["类型"].FormattedValue.ToString();
                 string strQueryCondition = dr["查询条件"].ToString();
-                code_list.Add(string.Format("[{0}]", strType));
+                code_list.Add(string.Format("[{0}(\"{1}\")]", strType, strServerName));
+                code_list.Add("[displayname(name=\"\")]");
+                code_list.Add("[note(name=\"\")]");
+                code_list.Add("[paraoutname(name=\"\")]");
+                code_list.Add("[schemaVal(name=\"\")]");
                 if (strServerName == "GetAll")
                     code_list.Add(string.Format("public List<{0}> {1}({2})", className, strServerName, strQueryCondition));
                 else
@@ -497,6 +502,22 @@ namespace CreateCord
         public string GetTableName()
         {
             return dgridTable.SelectedRows[0].Cells["name"].Value.ToString();
+        }
+
+        private void BtnAddRow_Click(object sender, EventArgs e)
+        {
+            if (null == dgvColumns.DataSource)
+            {
+                MessageBox.Show("请选择需要生成的表", "提示");
+                return;
+            }
+            DataTable table = dgvColumns.DataSource as DataTable;
+            DataRow dr = table.NewRow();
+            dr[0] = TableName;
+            table.Rows.Add(dr);
+            dgvColumns.Rows[table.Rows.Count - 1].Cells[1].ReadOnly = false;
+            
+
         }
     }
 }
