@@ -16,7 +16,7 @@ namespace CreateCord
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new createCode());
+            Application.Run(new Main());
         }
     }
 }

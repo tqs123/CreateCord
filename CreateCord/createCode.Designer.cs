@@ -45,19 +45,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dgridTable = new System.Windows.Forms.DataGridView();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dgvColumns = new System.Windows.Forms.DataGridView();
             this.表名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.服务名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.类型 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.查询条件 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgridTable = new System.Windows.Forms.DataGridView();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgridTable)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColumns)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgridTable)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -123,7 +123,7 @@
             this.ConpontentName.Name = "ConpontentName";
             this.ConpontentName.Size = new System.Drawing.Size(100, 21);
             this.ConpontentName.TabIndex = 18;
-            this.ConpontentName.Text = "SRS.Component";
+            this.ConpontentName.Text = "WebApiBLL";
             // 
             // label5
             // 
@@ -140,7 +140,7 @@
             this.ManagerName.Name = "ManagerName";
             this.ManagerName.Size = new System.Drawing.Size(100, 21);
             this.ManagerName.TabIndex = 16;
-            this.ManagerName.Text = "SRS.Manager";
+            this.ManagerName.Text = "WebApiDAL";
             // 
             // label4
             // 
@@ -157,7 +157,7 @@
             this.ModelName.Name = "ModelName";
             this.ModelName.Size = new System.Drawing.Size(100, 21);
             this.ModelName.TabIndex = 14;
-            this.ModelName.Text = "SRS.Model";
+            this.ModelName.Text = "WebApiModel";
             // 
             // lABEL
             // 
@@ -227,6 +227,35 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "选择表";
             // 
+            // dgridTable
+            // 
+            this.dgridTable.AllowUserToAddRows = false;
+            this.dgridTable.AllowUserToDeleteRows = false;
+            this.dgridTable.AllowUserToResizeColumns = false;
+            this.dgridTable.AllowUserToResizeRows = false;
+            this.dgridTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgridTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgridTable.ColumnHeadersVisible = false;
+            this.dgridTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.name});
+            this.dgridTable.Location = new System.Drawing.Point(5, 20);
+            this.dgridTable.MultiSelect = false;
+            this.dgridTable.Name = "dgridTable";
+            this.dgridTable.ReadOnly = true;
+            this.dgridTable.RowHeadersVisible = false;
+            this.dgridTable.RowTemplate.Height = 23;
+            this.dgridTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgridTable.Size = new System.Drawing.Size(128, 449);
+            this.dgridTable.TabIndex = 1;
+            this.dgridTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgridTable_CellClick);
+            // 
+            // name
+            // 
+            this.name.DataPropertyName = "name";
+            this.name.HeaderText = "";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dgvColumns);
@@ -283,35 +312,6 @@
             this.查询条件.HeaderText = "查询条件";
             this.查询条件.Name = "查询条件";
             // 
-            // dgridTable
-            // 
-            this.dgridTable.AllowUserToAddRows = false;
-            this.dgridTable.AllowUserToDeleteRows = false;
-            this.dgridTable.AllowUserToResizeColumns = false;
-            this.dgridTable.AllowUserToResizeRows = false;
-            this.dgridTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgridTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgridTable.ColumnHeadersVisible = false;
-            this.dgridTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.name});
-            this.dgridTable.Location = new System.Drawing.Point(5, 20);
-            this.dgridTable.MultiSelect = false;
-            this.dgridTable.Name = "dgridTable";
-            this.dgridTable.ReadOnly = true;
-            this.dgridTable.RowHeadersVisible = false;
-            this.dgridTable.RowTemplate.Height = 23;
-            this.dgridTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgridTable.Size = new System.Drawing.Size(128, 449);
-            this.dgridTable.TabIndex = 1;
-            this.dgridTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgridTable_CellClick);
-            // 
-            // name
-            // 
-            this.name.DataPropertyName = "name";
-            this.name.HeaderText = "";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            // 
             // createCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -328,9 +328,9 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgridTable)).EndInit();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvColumns)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgridTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

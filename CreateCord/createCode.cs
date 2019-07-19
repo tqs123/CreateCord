@@ -33,7 +33,7 @@ namespace CreateCord
         string strvalue = string.Empty;
         private void createCode_Load(object sender, EventArgs e)
         {
-            IcreateType = new SQLCreateCode("server=(local);uid=sa;pwd=123456;database=FHIR;");
+            IcreateType = new PGCreateCode(ConnectionString);
             DataTable dt_Tables = IcreateType.GetTables();
      
             dgridTable.DataSource = dt_Tables;
@@ -314,7 +314,7 @@ namespace CreateCord
             {
                 string strTypeName = dr["服务名"].ToString();
                 string strQueryCondition = dr["查询条件"].ToString();
-                if (strTypeName == "getall")
+                if (strTypeName == "GetAll")
                 {
 
                     code_list.Add(string.Format(" public int {0} ({1})", strTypeName, strQueryCondition));
@@ -376,6 +376,8 @@ namespace CreateCord
             code_list.Add("using System.Collections.Generic;");
             code_list.Add("using System.Linq;");
             code_list.Add("using System.Text;");
+            code_list.Add("using System.Web.Mvc;");
+            code_list.Add("using WebApiModel;");
             code_list.Add("using System.Threading.Tasks;");
             code_list.Add("namespace Controllers");
             code_list.Add("{");
@@ -384,7 +386,7 @@ namespace CreateCord
 
             code_list.Add("public ActionResult Index()");
             code_list.Add("{");
-            code_list.Add("" + className + "  com = new " + className + "();");
+       
             code_list.Add("return View();");
             code_list.Add("}");
             int i = 0;
@@ -394,7 +396,7 @@ namespace CreateCord
                 string strType = this.dgvColumns.Rows[i].Cells["类型"].FormattedValue.ToString();
                 string strQueryCondition = dr["查询条件"].ToString();
                 code_list.Add(string.Format("[{0}]", strType));
-                if (strServerName == "getall")
+                if (strServerName == "GetAll")
                     code_list.Add(string.Format("public List<{0}> {1}({2})", className, strServerName, strQueryCondition));
                 else
                     code_list.Add(string.Format("public int {0}({1})", strServerName, strQueryCondition));
@@ -409,7 +411,7 @@ namespace CreateCord
                 }
                 if (para.Length > 0)
                     para = para.Substring(0, para.Length - 1);
-                code_list.Add(string.Format("cp.{0}({1});", strServerName, para));
+                code_list.Add(string.Format("return cp.{0}({1});", strServerName, para));
                 code_list.Add("}");
                 i++;
             }
@@ -471,7 +473,7 @@ namespace CreateCord
             dt.Columns.Add("服务名");
             dt.Columns.Add("类型");
             dt.Columns.Add("查询条件");
-            string[] strArr = { "insert", "update", "delete", "getall" };
+            string[] strArr = { "Insert", "Update", "Delete", "GetAll" };
             for (int i = 0; i < strArr.Length; i++)
             {
                 DataRow dr = dt.NewRow();
