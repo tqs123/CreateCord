@@ -13,7 +13,7 @@ namespace CreateCord
 
         public DataTable GetData(string tableName)
         {
-            string sql = string.Format(@"select * from {0}", tableName);
+            string sql = string.Format(@"select * from {0} limit 1", tableName);
             return iDB.getDataTable(sql);
         }
 
