@@ -52,7 +52,7 @@ namespace CreateCord
                 //创建pic文件夹
                 System.IO.Directory.CreateDirectory(subPathName);
             }
-            DataRow[] list = IcreateType.GetColumns(TableName).Select("type='jsonb' or type='json' or type='varchar'");
+            DataRow[] list = IcreateType.GetColumns(TableName).Select("type='jsonb' or type='json'");
             DataTable lists = IcreateType.GetData(TableName);
 
             if (list.Length != 0)
@@ -65,7 +65,7 @@ namespace CreateCord
                     strvalue = lists.Rows[0]["" + name + ""].ToString();
                 }
             }
-            CreateModel("{\"collection\":{\"collector\":{\"reference\":\"\",\"display\":\"\"},\"method\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"fastingStatus[x]\":{\"fastingStatusCodeableConcept\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]}},\"bodySite\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"quantity\":{\"value\":0,\"unit\":\"\"}},\"processing\":[{\"procedure\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"description\":\"\",\"time[x]\":{\"timeDateTime\":\"\"},\"additive[x]\":[{\"additiveCodeableConcept\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]}}]}],\"parent\":[{\"reference\":\"\"}],\"accessionIdentifier\":{\"value\":\"\"},\"type\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"container\":[{\"specimenQuantity\":{\"value\":0,\"unit\":\"\"},\"type\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}],\"text\":\"\"},\"description\":\"\",\"capacity\":{\"value\":0,\"unit\":\"\"},\"identifier\":[{\"type\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"value\":\"\"}],\"additive[x]\":{\"additiveCodeableConcept\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]}}}],\"request\":[{\"reference\":\"\"}],\"identifier\":[{\"type\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"value\":\"\"}],\"condition\":[{\"coding\":[{\"code\":\"\",\"display\":\"\"}]}],\"subject\":{\"reference\":\"\",\"type\":\"\",\"display\":\"\"},\"note\":[{\"author[x]\":{\"authorReference\":{\"reference\":\"\",\"display\":\"\"}},\"time\":\"\",\"text\":\"\"}],\"status\":\"\",\"contained\":[{\"gender\":\"\",\"birthDate\":\"\",\"height_value\":0,\"height_unit\":\"\",\"weight_value\":0,\"weight_unit\":\"\",\"career_code\":\"\",\"career_display\":\"\",\"referenceType\":\"\",\"id\":\"\"}]}");
+            CreateModel(strvalue);
         }
       
         public void findNode(object obj, string fileName, string fastName, bool IsF)
