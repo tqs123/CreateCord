@@ -41,9 +41,9 @@ namespace CreateCord
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (null==dgvColumns.DataSource)
+            if (null == dgvColumns.DataSource)
             {
-                MessageBox.Show("请选择需要生成的表","提示");
+                MessageBox.Show("请选择需要生成的表", "提示");
                 return;
             }
             subPathName = "" + t_path.Text + "" + fileName.Text + ""; //创建文件夹
@@ -54,58 +54,20 @@ namespace CreateCord
             }
             DataRow[] list = IcreateType.GetColumns(TableName).Select("type='jsonb' or type='json' or type='varchar'");
             DataTable lists = IcreateType.GetData(TableName);
-          
-            if (list.Length!=0)
+
+            if (list.Length != 0)
             {
                 string name = list[0][0].ToString();
-                 strvalue = string.Empty;
+                strvalue = string.Empty;
                 if (lists.Rows.Count > 0)
                 {
 
                     strvalue = lists.Rows[0]["" + name + ""].ToString();
                 }
             }
-            CreateModel(strvalue);
+            CreateModel("{\"collection\":{\"collector\":{\"reference\":\"\",\"display\":\"\"},\"method\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"fastingStatus[x]\":{\"fastingStatusCodeableConcept\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]}},\"bodySite\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"quantity\":{\"value\":0,\"unit\":\"\"}},\"processing\":[{\"procedure\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"description\":\"\",\"time[x]\":{\"timeDateTime\":\"\"},\"additive[x]\":[{\"additiveCodeableConcept\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]}}]}],\"parent\":[{\"reference\":\"\"}],\"accessionIdentifier\":{\"value\":\"\"},\"type\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"container\":[{\"specimenQuantity\":{\"value\":0,\"unit\":\"\"},\"type\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}],\"text\":\"\"},\"description\":\"\",\"capacity\":{\"value\":0,\"unit\":\"\"},\"identifier\":[{\"type\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"value\":\"\"}],\"additive[x]\":{\"additiveCodeableConcept\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]}}}],\"request\":[{\"reference\":\"\"}],\"identifier\":[{\"type\":{\"coding\":[{\"code\":\"\",\"display\":\"\"}]},\"value\":\"\"}],\"condition\":[{\"coding\":[{\"code\":\"\",\"display\":\"\"}]}],\"subject\":{\"reference\":\"\",\"type\":\"\",\"display\":\"\"},\"note\":[{\"author[x]\":{\"authorReference\":{\"reference\":\"\",\"display\":\"\"}},\"time\":\"\",\"text\":\"\"}],\"status\":\"\",\"contained\":[{\"gender\":\"\",\"birthDate\":\"\",\"height_value\":0,\"height_unit\":\"\",\"weight_value\":0,\"weight_unit\":\"\",\"career_code\":\"\",\"career_display\":\"\",\"referenceType\":\"\",\"id\":\"\"}]}");
         }
-        public void CreateModel(string strJson)
-        {
-            subPath = subPathName + "\\" + ModelName.Text + "";
-            if (false == System.IO.Directory.Exists(subPath))
-            {
-                //创建pic文件夹
-                System.IO.Directory.CreateDirectory(subPath);
-            }
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            Dictionary<string, Object> json = (Dictionary<string, Object>)serializer.DeserializeObject(strJson);
-           
-            FileOperate.FWrite("using System;\r\nusing System.Collections.Generic;\r\nnamespace " + ModelName.Text.Trim()+"\r\n{\r\npublic class " + TableName + "\r\n{\r\n", "" + subPath + "\\" + TableName + ".cs");
-            if (json != null)
-            {
-                List<string> keys = json.Keys.ToList();
-                foreach (var s in keys)
-                {
-                    findNode(json[s], s, "test", true);
-                }
-            }
-         
-    
-            DataRow[] Rowlist = IcreateType.GetColumns(TableName).Select("type <> 'jsonb' and type <>'json'");
-            for (int i = 0; i < Rowlist.Length; i++)
-            {
-                string classType = FileOperate.SqlTypeTope(Rowlist[i][1].ToString());
-                if (classType == "")
-                {
-                    classType = "string";
-                }
-                string className = Rowlist[i][0].ToString();
-                FileOperate.FWrite("public  " + classType + "  " + className + "    {get;set;}\r\n", "" + subPath + "\\" + TableName + ".cs");
-
-            }
-            FileOperate.FWrite("}\r\n}\r\n", "" + subPath + "\\" + TableName + ".cs");
-            CreateManger(TableName);
-            CreateComponent((DataTable)dgvColumns.DataSource);
-            CreateControllers((DataTable)dgvColumns.DataSource);
-        }
+      
         public void findNode(object obj, string fileName, string fastName, bool IsF)
         {
             if (null == obj)
@@ -225,6 +187,47 @@ namespace CreateCord
             }
         }
 
+        #region 自动生成实体类=======================
+        public void CreateModel(string strJson)
+        {
+            subPath = subPathName + "\\" + ModelName.Text + "";
+            if (false == System.IO.Directory.Exists(subPath))
+            {
+                //创建pic文件夹
+                System.IO.Directory.CreateDirectory(subPath);
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            Dictionary<string, Object> json = (Dictionary<string, Object>)serializer.DeserializeObject(strJson);
+
+            FileOperate.FWrite("using System;\r\nusing System.Collections.Generic;\r\nnamespace " + ModelName.Text.Trim() + "\r\n{\r\npublic class " + TableName + "\r\n{\r\n", "" + subPath + "\\" + TableName + ".cs");
+            if (json != null)
+            {
+                List<string> keys = json.Keys.ToList();
+                foreach (var s in keys)
+                {
+                    findNode(json[s], s, "test", true);
+                }
+            }
+
+
+            DataRow[] Rowlist = IcreateType.GetColumns(TableName).Select("type <> 'jsonb' and type <>'json'");
+            for (int i = 0; i < Rowlist.Length; i++)
+            {
+                string classType = FileOperate.SqlTypeTope(Rowlist[i][1].ToString());
+                if (classType == "")
+                {
+                    classType = "string";
+                }
+                string className = Rowlist[i][0].ToString();
+                FileOperate.FWrite("public  " + classType + "  " + className + "    {get;set;}\r\n", "" + subPath + "\\" + TableName + ".cs");
+
+            }
+            FileOperate.FWrite("}\r\n}\r\n", "" + subPath + "\\" + TableName + ".cs");
+            CreateManger(TableName);
+            CreateComponent((DataTable)dgvColumns.DataSource);
+            CreateControllers((DataTable)dgvColumns.DataSource);
+        } 
+        #endregion
         #region 自动生成数据访问层=================
         /// <summary>
         /// 自动生成数据访问层
@@ -487,7 +490,6 @@ namespace CreateCord
             TableName = dataName;
 
         }
-
         /// <summary>
         /// 获取需要生成表的名称
         /// </summary>
